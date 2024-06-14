@@ -1,9 +1,15 @@
 package com.ethan.backend.services;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.ethan.backend.dtos.AppUserDto;
+import com.ethan.backend.dtos.BookDto;
+import com.ethan.backend.entities.AppUser;
+import com.ethan.backend.entities.Book;
+import com.ethan.backend.exceptions.AppException;
 import com.ethan.backend.mappers.AppUserMapper;
 import com.ethan.backend.repositories.AppUserRepository;
 
@@ -19,5 +25,9 @@ public class AppUserService {
     public List<AppUserDto> allAppUserDtos() {
         return appUserMapper.toAppUserDtos(appUserRepository.findAll());
     }
-
+    public AppUserDto getAppUser(Long id) {
+        AppUser record = appUserRepository.findById(id)
+                .orElseThrow(() -> new AppException("App User record not found", HttpStatus.NOT_FOUND));
+        return appUserMapper.toAppUserDto(record);
+    }
 }
