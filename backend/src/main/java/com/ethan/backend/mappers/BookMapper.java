@@ -10,10 +10,10 @@ import com.ethan.backend.entities.Book;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    Book toAppUser(BookDto bookDto);
+    Book toBook(BookDto bookDto);
 
-    BookDto toGymRecordDto(Book gymRecord);
+    BookDto toBookDto(Book book);
 
-    List<BookDto> toAppUserDtos(List<Book> books);
+    List<BookDto> toBookDtos(List<Book> books);
 
 }

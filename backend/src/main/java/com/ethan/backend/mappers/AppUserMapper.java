@@ -12,7 +12,7 @@ public interface AppUserMapper {
 
     AppUser toAppUser(AppUserDto appUserDto);
 
-    AppUserDto toGymRecordDto(AppUser gymRecord);
+    AppUserDto toAppUserDto(AppUser appUser);
 
     List<AppUserDto> toAppUserDtos(List<AppUser> appUsers);
 

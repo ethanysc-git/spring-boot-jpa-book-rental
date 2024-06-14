@@ -9,9 +9,9 @@ import com.ethan.backend.entities.Inventory;
 
 @Mapper(componentModel = "spring")
 public interface InventoryMapper {
-    Inventory toAppUser(InventoryDto inventoryDto);
+    Inventory toInventory(InventoryDto inventoryDto);
 
-    InventoryDto toGymRecordDto(Inventory inventory);
+    InventoryDto toInventoryDto(Inventory inventory);
 
-    List<InventoryDto> toAppUserDtos(List<Inventory> inventories);
+    List<InventoryDto> toInventoryDtos(List<Inventory> inventories);
 }
