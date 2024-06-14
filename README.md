@@ -15,7 +15,7 @@ mvn spring-boot:run
 
 ### Local database
 
-Create the local database with the sql script upder the following path
+Create the local database with the sql script files under the following path
 
 backend\src\main\resources\db\sql
 
