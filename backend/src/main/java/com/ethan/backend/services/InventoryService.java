@@ -25,7 +25,7 @@ public class InventoryService {
         return inventoryMapper.toInventoryDtos(inventoryRepository.findAll());
     }
 
-    public InventoryDto getInventory(UUID id) {
+    public InventoryDto getInventoryDto(UUID id) {
         Inventory record = inventoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Inventory record not found", HttpStatus.NOT_FOUND));
         return inventoryMapper.toInventoryDto(record);

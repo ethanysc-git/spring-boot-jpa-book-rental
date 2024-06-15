@@ -7,26 +7,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ethan.backend.dtos.BookDto;
-import com.ethan.backend.services.BookService;
+import com.ethan.backend.dtos.InventoryDto;
+import com.ethan.backend.services.InventoryService;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/inventory")
 @RequiredArgsConstructor
-public class BookController {
+public class InventoryController {
 
-    private final BookService bookService;
+    private final InventoryService inventoryService;
 
     @GetMapping("/records")
-    public ResponseEntity<List<BookDto>> allBookDtos() {
-        return ResponseEntity.ok(bookService.allBookDtos());
+    public ResponseEntity<List<InventoryDto>> allInventoryDtos() {
+        return ResponseEntity.ok(inventoryService.allInventoryDtos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDto> getBookDto(@PathVariable UUID id) {
-        return ResponseEntity.ok(bookService.getBookDto(id));
+    public ResponseEntity<InventoryDto> getInventoryDto(@PathVariable UUID id) {
+        return ResponseEntity.ok(inventoryService.getInventoryDto(id));
     }
 }

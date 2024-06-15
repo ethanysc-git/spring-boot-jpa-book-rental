@@ -26,7 +26,7 @@ public class AppUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppUserDto> getGymRecord(@PathVariable UUID id) {
+    public ResponseEntity<AppUserDto> getAppUserDto(@PathVariable UUID id) {
         return ResponseEntity.ok(appUserService.getAppUserDto(id));
     }
 }
