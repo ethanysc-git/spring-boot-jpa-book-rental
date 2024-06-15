@@ -1,6 +1,7 @@
 package com.ethan.backend.dtos;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +17,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InventoryDto {
-    private Long id;
-    private Long book_id;
-    private Long user_id;
+    private UUID id;
+    private UUID book_id;
+    private UUID user_id;
     private LocalDateTime loan_date;
 }
 

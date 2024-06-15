@@ -12,6 +12,7 @@ import com.ethan.backend.mappers.InventoryMapper;
 import com.ethan.backend.repositories.InventoryRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class InventoryService {
         return inventoryMapper.toInventoryDtos(inventoryRepository.findAll());
     }
 
-    public InventoryDto getInventory(Long id) {
+    public InventoryDto getInventory(UUID id) {
         Inventory record = inventoryRepository.findById(id)
                 .orElseThrow(() -> new AppException("Inventory record not found", HttpStatus.NOT_FOUND));
         return inventoryMapper.toInventoryDto(record);

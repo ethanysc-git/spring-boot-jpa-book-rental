@@ -1,5 +1,7 @@
 package com.ethan.backend.dtos;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +17,7 @@ import lombok.Setter;
 @Setter
 public class AppUserDto {
 
-    private Long id;
+    private UUID id;
     private String role;
     private String username;
 }

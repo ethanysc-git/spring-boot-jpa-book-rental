@@ -12,6 +12,7 @@ import com.ethan.backend.mappers.BookMapper;
 import com.ethan.backend.repositories.BookRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class BookService {
         return bookMapper.toBookDtos(bookRepository.findAll());
     }
 
-    public BookDto getBookDto(Long id) {
+    public BookDto getBookDto(UUID id) {
         Book record = bookRepository.findById(id)
                 .orElseThrow(() -> new AppException("Book record not found", HttpStatus.NOT_FOUND));
         return bookMapper.toBookDto(record);
