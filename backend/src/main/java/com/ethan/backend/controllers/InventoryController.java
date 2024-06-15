@@ -20,7 +20,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @GetMapping("/records")
+    @GetMapping("/")
     public ResponseEntity<List<InventoryDto>> allInventoryDtos() {
         return ResponseEntity.ok(inventoryService.allInventoryDtos());
     }

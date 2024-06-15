@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/records")
+    @GetMapping("/")
     public ResponseEntity<List<BookDto>> allBookDtos() {
         return ResponseEntity.ok(bookService.allBookDtos());
     }
