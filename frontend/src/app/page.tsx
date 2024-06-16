@@ -9,6 +9,18 @@ export default function Index() {
   const [appUserRecords, setAppUserRecords] = useState<AppUser[]>([]);
   const [bookRecords, setBookRecords] = useState<Book[]>([]);
   const [inventoryRecords, setInventoryRecords] = useState<Inventory[]>([]);
+  const [loginRole, setLoginRole] = useState('');
+
+  const login = (e: string) => {
+    const pText = e;
+    if (pText == 'USER') {
+      setLoginRole(pText);
+    } else if (pText == 'ADMIN') {
+      setLoginRole(pText);
+    } else {
+      setLoginRole('');
+    }
+  };
 
   useEffect(() => {
     if (appUserRecords.length === 0) {
@@ -85,13 +97,7 @@ export default function Index() {
         <div className="container">
           <div id="welcome">
             <h1>Welcome Book Rental 👋</h1>
-            <a
-              id="user-login"
-              className="button-pill rounded shadow"
-              href="https://github.com/ethanysc-git/spring-boot-jpa-book-rental/tree/main"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a id="user-login" className="button-pill rounded shadow">
               <svg
                 viewBox="0 0 24 24"
                 stroke="#212b36"
@@ -102,9 +108,17 @@ export default function Index() {
                 <circle cx="12" cy="8" r="5" />
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
               </svg>
+              <p>{loginRole}</p>
+              <div className="dropdown-content">
+                <p onClick={(e) => login((e.target as HTMLElement).innerText)}>
+                  USER
+                </p>
+                <p onClick={(e) => login((e.target as HTMLElement).innerText)}>
+                  ADMIN
+                </p>
+              </div>
             </a>
           </div>
-
           <div id="hero" className="rounded">
             {
               <>
@@ -137,7 +151,6 @@ export default function Index() {
               </>
             }
           </div>
-
           <div id="middle-content">
             <div id="inventory-list">
               {
@@ -165,166 +178,6 @@ export default function Index() {
                   ))}
                 </>
               }
-              {/* <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div>
-              <div className="inventory-item rounded shadow">
-                <div>
-                  <svg
-                    width="120"
-                    height="120"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <image
-                      href="https://cf-assets2.tenlong.com.tw/ig/024/256/434/9781492082996.jpg?1709005907"
-                      height="120"
-                      width="120"
-                    />
-                  </svg>
-                  <h2>
-                    Author
-                    <span>Mezzalira, Luca</span>
-                  </h2>
-                </div>
-                <p>Building Micro-Frontends</p>
-              </div> */}
             </div>
           </div>
           <div id="commands" className="rounded shadow">
