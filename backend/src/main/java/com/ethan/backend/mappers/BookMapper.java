@@ -12,7 +12,6 @@ import com.ethan.backend.entities.Book;
 public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
-
     Book toBook(BookDto bookDto);
 
     BookDto toBookDto(Book book);
