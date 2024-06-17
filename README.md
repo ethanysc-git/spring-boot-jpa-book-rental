@@ -23,6 +23,8 @@ I've also added Mapstruct and Lombok as code generators to create the mappers an
 
 To start the backend, run the following command:
 
+## if BUILD FAILURE, Run Build Task
+
 ```
 cd backend
 mvn spring-boot:run
@@ -49,7 +51,8 @@ To run the frontend, run the following command:
 ```
 cd frontend
 npm install
-nx serve
+npm add --global nx@latest
+nx dev
 ```
 
 ## SQL Script (Done)
