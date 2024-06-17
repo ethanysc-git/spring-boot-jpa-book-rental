@@ -1,6 +1,6 @@
 # CRUD Application made with Spring Boot and React
 
-## Backend(processing)
+## Backend(Done)
 
 Current progress
 
@@ -30,7 +30,7 @@ Create the local database with the sql script files under the following path
 
 backend\src\main\resources\db\sql
 
-## Frontend (processing)
+## Frontend (Done)
 
 The frontend is made with the ReactJS version 18.3.1, using Next with TypeScript
 
@@ -38,7 +38,7 @@ Current progress
 
 1. Set up UI (rwd available)
 2. Set Login UI
-3. Build Frontend borrow and return logic (vo.o.1)
+3. Build Frontend borrow and return logic (vo.o.2)
 
 To run the frontend, run the following command:
 
