@@ -11,6 +11,7 @@ Current progress
 5. Build Dtos and Mappers
 6. Build Repository Interface for Entity to use JPA in Service
 7. Build Service for Jpa findAll() and findById(id)
+8. Build Service and Controller for borrow and return logic
 
 The backend is made with the Spring Boot version 3.2.6, Java 21, JPA and a Postgres access.
 
@@ -29,9 +30,15 @@ Create the local database with the sql script files under the following path
 
 backend\src\main\resources\db\sql
 
-## Frontend (Undo)
+## Frontend (processing)
 
-The frontend is made with the ReactJS version 18.0.2
+The frontend is made with the ReactJS version 18.3.1, using Next with TypeScript
+
+Current progress
+
+1. Set up UI (rwd available)
+2. Set Login UI
+3. Build Frontend borrow and return logic (vo.o.1)
 
 To run the frontend, run the following command:
 
