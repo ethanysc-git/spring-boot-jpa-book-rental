@@ -9,16 +9,100 @@ export default function Index() {
   const [appUserRecords, setAppUserRecords] = useState<AppUser[]>([]);
   const [bookRecords, setBookRecords] = useState<Book[]>([]);
   const [inventoryRecords, setInventoryRecords] = useState<Inventory[]>([]);
-  const [loginRole, setLoginRole] = useState('');
+  const [loginRole, setLoginRole] = useState<AppUser>({
+    id: '',
+    password: '',
+    role: 'GUEST',
+    username: '',
+  });
+  const [inventory, setInventory] = useState<Inventory>({
+    id: '',
+    book_id: '',
+    user_id: '',
+    loan_date: '',
+  });
 
   const login = (e: string) => {
     const pText = e;
     if (pText == 'USER') {
-      setLoginRole(pText);
+      const appUser = appUserRecords.filter(
+        (user: AppUser) => user.role == 'USER'
+      )[0];
+      setLoginRole(appUser);
     } else if (pText == 'ADMIN') {
-      setLoginRole(pText);
+      const appUser = appUserRecords.filter(
+        (user: AppUser) => user.role == 'ADMIN'
+      )[0];
+      setLoginRole(appUser);
     } else {
-      setLoginRole('');
+      setLoginRole({
+        id: '',
+        password: '',
+        role: 'GUEST',
+        username: '',
+      });
+    }
+  };
+
+  const borrowBook = async (e: Book) => {
+    const inventoryId = e.availableRecord[0].id;
+    if (loginRole.role == 'USER') {
+      await fetch(`http://localhost:8080/books/borrow`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          id: inventoryId,
+          book_id: e.id,
+          user_id: loginRole.id,
+          loan_date: '',
+        }),
+      })
+        .then((response) => {
+          if (response.status == 200) {
+            return response.json();
+          }
+          return null;
+        })
+        .then((data) => {
+          if (data !== null) {
+            alert(JSON.stringify(data));
+          }
+        });
+    } else if (loginRole.role == 'ADMIN') {
+      alert(`${e.title}-${e.id}-'You are ADMIN'`);
+    } else {
+      alert('You are GUEST');
+    }
+  };
+
+  const returnBook = async (e: Book) => {
+    const inventoryId = e.borrowedRecord[0].id;
+    if (loginRole.role == 'USER') {
+      await fetch(`http://localhost:8080/books/return`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          id: inventoryId,
+          book_id: e.id,
+          user_id: loginRole.id,
+          loan_date: '',
+        }),
+      })
+        .then((response) => {
+          if (response.status == 200) {
+            return response.json();
+          }
+          return null;
+        })
+        .then((data) => {
+          if (data !== null) {
+            alert(JSON.stringify(data));
+          }
+        });
+    } else if (loginRole.role == 'ADMIN') {
+      alert(`${e.title}-${e.id}-'You are ADMIN'`);
+    } else {
+      alert('You are GUEST');
     }
   };
 
@@ -67,7 +151,7 @@ export default function Index() {
   }, [bookRecords]);
 
   useEffect(() => {
-    if (inventoryRecords.length === 0) {
+    if (bookRecords.length > 0) {
       const fetchData = async () => {
         await fetch('http://localhost:8080/inventory/', {
           method: 'GET',
@@ -80,13 +164,25 @@ export default function Index() {
           })
           .then((data) => {
             if (data !== null) {
+              bookRecords.forEach((book: Book) => {
+                const available_res = data.filter(
+                  (i: Inventory) => book.id == i.book_id && i.loan_date == null
+                );
+                const borrowed_res = data.filter(
+                  (i: Inventory) => book.id == i.book_id && i.loan_date != null
+                );
+                book.availableRecord = available_res;
+                book.borrowedRecord = borrowed_res;
+                book.availableBalance = available_res.length;
+                book.borrowedAmount = borrowed_res.length;
+              });
               setInventoryRecords(data);
             }
           });
       };
       fetchData();
     }
-  }, [inventoryRecords]);
+  }, [bookRecords, inventoryRecords]);
 
   /*
 
@@ -108,13 +204,16 @@ export default function Index() {
                 <circle cx="12" cy="8" r="5" />
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
               </svg>
-              <p>{loginRole}</p>
+              <p>-{loginRole.role}</p>
               <div className="dropdown-content">
                 <p onClick={(e) => login((e.target as HTMLElement).innerText)}>
                   USER
                 </p>
                 <p onClick={(e) => login((e.target as HTMLElement).innerText)}>
                   ADMIN
+                </p>
+                <p onClick={(e) => login((e.target as HTMLElement).innerText)}>
+                  Logout
                 </p>
               </div>
             </a>
@@ -143,8 +242,29 @@ export default function Index() {
                       </h2>
                     </div>
                     <div className="container-right">
-                      <a href="#commands"> Return </a>
-                      <a href="#commands"> Borrow </a>
+                      <span></span>
+
+                      {record.borrowedAmount > 0 && (
+                        <a onClick={(e) => returnBook(record)}>Return</a>
+                      )}
+                      {record.borrowedAmount > 0 && (
+                        <p>{record.borrowedAmount} : </p>
+                      )}
+
+                      {record.availableBalance > 0 && (
+                        <a onClick={(e) => borrowBook(record)}>Borrow</a>
+                      )}
+                      {record.availableBalance > 0 && (
+                        <p>{record.availableBalance} : </p>
+                      )}
+
+                      {/* <a onClick={(e) => returnBook(record)}>Return</a>
+
+                      <p>{record.borrowedAmount} : </p>
+
+                      <a onClick={(e) => borrowBook(record)}>Borrow</a>
+
+                      <p>{record.availableBalance} : </p> */}
                     </div>
                   </div>
                 ))}

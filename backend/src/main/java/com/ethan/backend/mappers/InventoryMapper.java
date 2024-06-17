@@ -3,6 +3,8 @@ package com.ethan.backend.mappers;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import com.ethan.backend.dtos.InventoryDto;
@@ -17,4 +19,11 @@ public interface InventoryMapper {
     InventoryDto toInventoryDto(Inventory inventory);
 
     List<InventoryDto> toInventoryDtos(List<Inventory> inventories);
+
+    @Mapping(target = "id", ignore = false)
+    @Mapping(target = "book_id", ignore = true)
+    @Mapping(target = "user_id", ignore = true)
+    @Mapping(target = "loan_date", ignore = true)
+    void updateInventory(@MappingTarget Inventory target, Inventory source);
+
 }

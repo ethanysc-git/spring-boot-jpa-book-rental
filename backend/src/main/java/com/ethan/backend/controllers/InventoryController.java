@@ -29,4 +29,5 @@ public class InventoryController {
     public ResponseEntity<InventoryDto> getInventoryDto(@PathVariable UUID id) {
         return ResponseEntity.ok(inventoryService.getInventoryDto(id));
     }
+
 }

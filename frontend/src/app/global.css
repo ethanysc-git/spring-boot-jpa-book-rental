@@ -34,6 +34,7 @@ h2 {
 a {
   color: inherit;
   text-decoration: inherit;
+  cursor: pointer;
 }
 pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
