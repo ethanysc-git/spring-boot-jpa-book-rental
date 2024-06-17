@@ -15,12 +15,6 @@ export default function Index() {
     role: 'GUEST',
     username: '',
   });
-  const [inventory, setInventory] = useState<Inventory>({
-    id: '',
-    book_id: '',
-    user_id: '',
-    loan_date: '',
-  });
 
   const login = (e: string) => {
     const pText = e;
@@ -45,8 +39,13 @@ export default function Index() {
   };
 
   const borrowBook = async (e: Book) => {
-    const inventoryId = e.availableRecord[0].id;
-    if (loginRole.role == 'USER') {
+    if (e.availableRecord.length == 0) {
+      return;
+    }
+    if (loginRole.role == 'GUEST') {
+      alert('Login First');
+    } else {
+      const inventoryId = e.availableRecord[0].id;
       await fetch(`http://localhost:8080/books/borrow`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
@@ -56,28 +55,23 @@ export default function Index() {
           user_id: loginRole.id,
           loan_date: '',
         }),
-      })
-        .then((response) => {
-          if (response.status == 200) {
-            return response.json();
-          }
-          return null;
-        })
-        .then((data) => {
-          if (data !== null) {
-            alert(JSON.stringify(data));
-          }
-        });
-    } else if (loginRole.role == 'ADMIN') {
-      alert(`${e.title}-${e.id}-'You are ADMIN'`);
-    } else {
-      alert('You are GUEST');
+      }).then((response) => {
+        if (response.status == 200) {
+          return response.json();
+        }
+        return null;
+      });
     }
   };
 
   const returnBook = async (e: Book) => {
-    const inventoryId = e.borrowedRecord[0].id;
-    if (loginRole.role == 'USER') {
+    if (e.borrowedRecord.length == 0) {
+      return;
+    }
+    if (loginRole.role == 'GUEST') {
+      alert('Login First');
+    } else {
+      const inventoryId = e.borrowedRecord[0].id;
       await fetch(`http://localhost:8080/books/return`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
@@ -87,22 +81,12 @@ export default function Index() {
           user_id: loginRole.id,
           loan_date: '',
         }),
-      })
-        .then((response) => {
-          if (response.status == 200) {
-            return response.json();
-          }
-          return null;
-        })
-        .then((data) => {
-          if (data !== null) {
-            alert(JSON.stringify(data));
-          }
-        });
-    } else if (loginRole.role == 'ADMIN') {
-      alert(`${e.title}-${e.id}-'You are ADMIN'`);
-    } else {
-      alert('You are GUEST');
+      }).then((response) => {
+        if (response.status == 200) {
+          return response.json();
+        }
+        return null;
+      });
     }
   };
 
@@ -148,7 +132,7 @@ export default function Index() {
       };
       fetchData();
     }
-  }, [bookRecords]);
+  }, [bookRecords, loginRole]);
 
   useEffect(() => {
     if (bookRecords.length > 0) {
@@ -169,7 +153,10 @@ export default function Index() {
                   (i: Inventory) => book.id == i.book_id && i.loan_date == null
                 );
                 const borrowed_res = data.filter(
-                  (i: Inventory) => book.id == i.book_id && i.loan_date != null
+                  (i: Inventory) =>
+                    book.id == i.book_id &&
+                    i.loan_date != null &&
+                    i.user_id == loginRole.id
                 );
                 book.availableRecord = available_res;
                 book.borrowedRecord = borrowed_res;
@@ -257,14 +244,6 @@ export default function Index() {
                       {record.availableBalance > 0 && (
                         <p>{record.availableBalance} : </p>
                       )}
-
-                      {/* <a onClick={(e) => returnBook(record)}>Return</a>
-
-                      <p>{record.borrowedAmount} : </p>
-
-                      <a onClick={(e) => borrowBook(record)}>Borrow</a>
-
-                      <p>{record.availableBalance} : </p> */}
                     </div>
                   </div>
                 ))}
