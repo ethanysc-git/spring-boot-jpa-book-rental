@@ -51,3 +51,31 @@ cd frontend
 npm install
 nx serve
 ```
+
+## SQL Script (Done)
+
+SQL script for checking DB status
+
+```
+WITH inventories_table AS
+    (
+    SELECT
+        book_id,
+        array_to_string(array_agg(distinct inventory.id),',') AS inventories,
+        COUNT( * ) AS balance
+    FROM inventory
+    where inventory.loan_date is null
+    GROUP BY book_id
+    )
+SELECT
+    book.id,
+    book.author,
+    book.title,
+    book.image,
+    inventories_table.inventories,
+    inventories_table.balance
+FROM  book
+LEFT JOIN inventories_table ON book.id = inventories_table.book_id
+GROUP BY book.id, inventories_table.inventories,inventories_table.balance
+
+```
